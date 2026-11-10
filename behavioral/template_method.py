@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 
 class DataPipeline(ABC):
+    required_fields = ()
     def __init__(self, source):
         self.source = source
         self.data = []
@@ -34,6 +35,9 @@ class DataPipeline(ABC):
     def validate(self):
         if not self.data:
             raise ValueError("No data")
+        for row in self.data:
+            if not all(field in row for field in self.required_fields):
+                raise ValueError("Missing required field")
         print("Validation passed")
 
     def after_validation(self):
@@ -49,6 +53,7 @@ class DataPipeline(ABC):
 
 
 class CSVPipeline(DataPipeline):
+    required_fields = ("id", "name")
     def extract(self):
         return [{"id": 1, "name": "Alice", "age": "30"}]
 
@@ -59,6 +64,7 @@ class CSVPipeline(DataPipeline):
 
 
 class APIPipeline(DataPipeline):
+    required_fields = ("user_id", "username")
     def after_validation(self):
         print("API data is ready to load")
 
@@ -73,6 +79,7 @@ class APIPipeline(DataPipeline):
 
 
 class DatabasePipeline(DataPipeline):
+    required_fields = ("product_id", "price")
     def extract(self):
         return [{"product_id": 501, "product_name": "laptop", "price": "1200"}]
 
@@ -84,6 +91,7 @@ class DatabasePipeline(DataPipeline):
 
 
 class XMLPipeline(DataPipeline):
+    required_fields = ("order_id", "total")
     def extract(self):
         # Small example: no external XML file is needed.
         return [{"order_id": "12", "total": "50.0"}]
