@@ -1,0 +1,6 @@
+{
+  "app": {"name": "PaymentPlatform", "debug": true},
+  "database": {"host": "localhost", "port": 5432},
+  "email": {"smtp_host": "smtp.example.com", "sender": "no-reply@example.com"},
+  "payment": {"api_key": "example-only-not-a-real-key", "environment": "sandbox"}
+}
