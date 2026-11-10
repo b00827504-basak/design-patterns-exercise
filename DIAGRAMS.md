@@ -150,6 +150,7 @@ classDiagram
         +extract()*
         +transform()*
         +validate()
+        +after_validation()
         +load()
         +cleanup()
     }
