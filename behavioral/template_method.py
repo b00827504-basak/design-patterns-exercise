@@ -14,6 +14,7 @@ class DataPipeline(ABC):
             self.data = self.extract()
             self.transform()
             self.validate()
+            self.after_validation()
             self.load()
         finally:
             self.cleanup()
@@ -35,6 +36,10 @@ class DataPipeline(ABC):
             raise ValueError("No data")
         print("Validation passed")
 
+    def after_validation(self):
+        """Optional hook: subclasses may add a step here."""
+        pass
+
     def load(self):
         print("Loaded", len(self.data), "records")
 
@@ -54,6 +59,9 @@ class CSVPipeline(DataPipeline):
 
 
 class APIPipeline(DataPipeline):
+    def after_validation(self):
+        print("API data is ready to load")
+
     def extract(self):
         return [{"user_id": 101, "username": "CHARLIE", "score": "85"}]
 
