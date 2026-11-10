@@ -34,6 +34,10 @@ classDiagram
         +department
         +position
         +salary
+        +start_date
+        +manager_id
+        +office_location
+        +contract_type
     }
     class EmployeeBuilder {
         +with_name(first_name, last_name)
@@ -41,6 +45,10 @@ classDiagram
         +with_job(department, position, salary)
         +with_equipment(laptop, parking)
         +with_access(vpn, admin)
+        +with_start_date(date)
+        +with_manager(manager_id)
+        +with_contact(phone, address, emergency_contact)
+        +with_office(location, contract_type)
         +build() Employee
     }
     class DeveloperBuilder
